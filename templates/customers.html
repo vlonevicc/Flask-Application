@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST">
+    <label for="option">Customer Reports</label>
+    <select id="option" name="option">
+        <option value="">Choose an Option</option>
+        <option value="Rental Sales">View Customer Sales Totals</option>
+        <option value="Movie Rentals">View Customer Rental Totals</option>
+    </select>
+
+    <select id="year" name="year">
+        <option value="">Choose a Year</option>
+        {% if years %}
+            {% for year in years %}
+                <option value="{{ year['year'] }}">{{ year['year'] }}</option>
+            {% endfor %}
+        {% endif %}
+    </select>
+
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+
+<br><br>
+{% if chart %}
+    <!-- Don't forget the "|safe"! -->
+    <div id="chart">
+        <embed type="image/svg+xml" src= {{ chart|safe }} />
+    </div>
+
+{% endif %}
+
+{% if rental_result %}
+    <table>
+        <tr>
+            <th>Customer</th>
+            <th>Total Sales</th>
+        </tr>
+        {% for record in rental_result %}
+            <tr>
+                <td>{{ record['customer'] }}</td>
+                <td>{{ record['totalSales'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}

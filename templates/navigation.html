@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('navigation')}}">
+    <select id="option" name="option">
+        <option value="">Choose an Option</option>
+        <option value="rentals">Movie Rental Reports</option>
+        <option value="customers">Customer Reports</option>
+        <option value="inventory">Inventory Reports</option>
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

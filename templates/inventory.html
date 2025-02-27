@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST">
+    <label for="option">Choose an Option</label>
+    <select id="option" name="option">
+        <option value="">Inventory Reports</option>
+        <option value="Movies By Category">View Number Of Movies Per Category</option>
+        <option value="Movies In Stock">View Movies In Stock Category</option>
+    </select>
+
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+<br><br>
+{% if chart %}
+    <!-- Don't forget the "|safe"! -->
+    <div id="chart">
+        <embed type="image/svg+xml" src= {{ chart|safe }} />
+    </div>
+
+{% endif %}
+
+{% if category_result %}
+    <table>
+        <tr>
+            <th>Category</th>
+            <th>Number of Movies</th>
+        </tr>
+        {% for record in category_result %}
+            <tr>
+                <td>{{ record['name'] }}</td>
+                <td>{{ record['numMovies'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+
+{% if stock_result %}
+    <table>
+        <tr>
+            <th>Category</th>
+            <th>Number in Stock</th>
+        </tr>
+        {% for record in stock_result %}
+            <tr>
+                <td>{{ record['name'] }}</td>
+                <td>{{ record['InStock'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+
+{% endblock %}

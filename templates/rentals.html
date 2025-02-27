@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST">
+    <label for="option">Choose an Option</label>
+    <select id="option" name="option">
+        <option value="">Rental Reports</option>
+        <option value="Monthly Sales">View Monthly Sales</option>
+        <option value="Sales By Category">View Sales By Category</option>
+        <option value="Sales By City">View Sales By City</option>
+    </select>
+
+    <select id="year" name="year">
+        <option value="">Choose a Year</option>
+        {% if years %}
+            {% for year in years %}
+                <option value="{{ year['year'] }}">{{ year['year'] }}</option>
+            {% endfor %}
+        {% endif %}
+    </select>
+
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+
+<br><br>
+{% if chart %}
+    <!-- Don't forget the "|safe"! -->
+    <div id="chart">
+        <embed type="image/svg+xml" src= {{ chart|safe }} />
+    </div>
+
+{% endif %}
+
+{% if result %}
+    <table>
+        <tr>
+            <th>Years</th>
+            <th>Months</th>
+            <th>Month_Num</th>
+            <th>Total Payments</th>
+        </tr>
+        {% for record in result %}
+            <tr>
+                <td>{{ record['year'] }}</td>
+                <td>{{ record['month'] }}</td>
+                <td>{{ record['month_num'] }}</td>
+                <td>{{ record['TotalPayments'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+
+
+{% if category_result %}
+    <table>
+        <tr>
+            <th>Year</th>
+            <th>Name</th>
+            <th>Total Payments</th>
+        </tr>
+        {% for record in category_result %}
+            <tr>
+                <td>{{ record['year'] }}</td>
+                <td>{{ record['name'] }}</td>
+                <td>{{ record['TotalPayments'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+{% if city_result %}
+    <table>
+        <tr>
+            <th>City</th>
+            <th>Year</th>
+            <th>Total Payments</th>
+        </tr>
+        {% for record in city_result %}
+            <tr>
+                <td>{{ record['city'] }}</td>
+                <td>{{ record['year'] }}</td>
+                <td>{{ record['TotalPayments'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+
+
+{% endblock %}
